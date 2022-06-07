@@ -15,3 +15,38 @@ code {
 .search-selector {
   margin-right: 50px;
 }
+
+
+/* Counter */
+.counter_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.counter_button_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+}
+
+.counter_button {
+  border-radius: 4px;
+  background-color: #6a7094;
+  color: aliceblue;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+}
+
+.counter_text {
+  font-size: 30px;
+  font-weight: 500;
+  color: #6a7094;
+}
