@@ -1,0 +1,17 @@
+[
+   { "id": 1,
+    "title": "The Hunger Games",
+    "price": 1.535,
+    "pictureUrl": "https://images-na.ssl-images-amazon.com/images/I/61i8nC90deL.jpg"
+    },
+    { "id": 2,
+    "title": "Catching Fire",
+    "price": 1.845,
+    "pictureUrl": "https://kbimages1-a.akamaihd.net/f2aa88e7-a1b1-413c-a3db-4b348da4282e/1200/1200/False/catching-fire-hunger-games-book-two.jpg"
+    },
+    { "id": 3,
+    "title": "Mockingjay",
+    "price": 2.555,
+    "pictureUrl": "https://m.media-amazon.com/images/I/51zkheo7x8L.jpg"
+    }
+]

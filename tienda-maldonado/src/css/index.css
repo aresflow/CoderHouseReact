@@ -50,3 +50,9 @@ code {
   font-weight: 500;
   color: #6a7094;
 }
+
+/* Imagenes cards */
+.card-img {
+  width: 100px !important;
+  height: 150px !important;
+}
