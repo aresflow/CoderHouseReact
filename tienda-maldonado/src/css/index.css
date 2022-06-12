@@ -52,6 +52,10 @@ code {
 }
 
 /* Imagenes cards */
+.row {
+  width: 300px;
+  padding: 20px;
+}
 .card-img {
   width: 100px !important;
   height: 150px !important;

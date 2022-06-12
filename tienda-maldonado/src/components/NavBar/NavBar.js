@@ -1,4 +1,6 @@
 import React from 'react'
+import {Link, NavLink} from 'react-router-dom';
+
 import CartWidget from '../CartWidget/CartWidget'
 
 const NavBar = () => {
@@ -12,7 +14,7 @@ const NavBar = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <a className="nav-link" href="https">Inicio<span className="sr-only">(current)</span></a>
+            <NavLink to='/' className={({ isActive }) => isActive ? 'nav-link' : 'nav-link'}>Inicio</NavLink>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="https">En oferta</a>
@@ -37,7 +39,9 @@ const NavBar = () => {
           <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
       </div>
-      <CartWidget />
+      <NavLink to='/cart' className="cart-widget">
+        <CartWidget />
+      </NavLink>
     </nav>
   )
 }
