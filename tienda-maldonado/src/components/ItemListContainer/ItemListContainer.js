@@ -2,7 +2,11 @@ import ItemList from "../ItemList/ItemList"
 
 const ItemListContainer = () => {
   return (
-    ItemList()
+    <div className="main_container">
+    {
+      ItemList()
+    }
+    </div>
   )
 }
 

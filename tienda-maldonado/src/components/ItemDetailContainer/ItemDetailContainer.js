@@ -1,31 +1,41 @@
 import { useState, useEffect } from "react"
+import { useParams } from 'react-router-dom';
+
+import productos from '../../data/productos.json'
 import ItemDetail from "../ItemDetail/ItemDetail"
+
 
 const ItemDetailContainer = () => {
 
     const [itemDetail, setItemDetail] = useState([])
     const [loading, setLoading] = useState(true)
+    const { id } = useParams()
 
-    const getItemDetail = async () => {
-        try {
-            const item = await fetch('/assets/data/item.json')
-            const itemFetched = await item.json()
-            setItemDetail(itemFetched)
-            setLoading(false)
-        }
-        catch (error) {
-            console.log(error)
-        }
+    const getItemDetail = () => {
+        return new Promise((resolve) => {
+            resolve(productos)
+        })
     }
+
     useEffect(() => {
         getItemDetail()
-    }, [])
+            .then((data) => {
+                setItemDetail(data.find(item => item.id === id))
+                setLoading(false)
+                })
+            .catch(error => { console.log(error)})
+    }, [id])
+
+            // const item = await fetch('/assets/data/item.json')
+            // const itemFetched = await item.json()
+            // setItemDetail(itemFetched)
+            // setLoading(false)
 
   return (
     <div>
         {
             loading ? <p>Loading...</p> :
-            <ItemDetail id={itemDetail.item[0].id} title={itemDetail.item[0].title} price={itemDetail.item[0].price} pictureUrl={itemDetail.item[0].pictureUrl} />
+            <ItemDetail title={itemDetail.title} price={itemDetail.price} pictureUrl={itemDetail.pictureUrl} description={itemDetail.description} stock={itemDetail.stock}/>
         }
     </div>
   )

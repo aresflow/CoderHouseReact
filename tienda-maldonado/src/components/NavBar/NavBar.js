@@ -1,12 +1,12 @@
 import React from 'react'
-import {Link, NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import CartWidget from '../CartWidget/CartWidget'
 
 const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="https">Tienda</a>
+      <NavLink to='/' className="navbar-brand">Libreria Stark</NavLink>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
@@ -17,21 +17,23 @@ const NavBar = () => {
             <NavLink to='/' className={({ isActive }) => isActive ? 'nav-link' : 'nav-link'}>Inicio</NavLink>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="https">En oferta</a>
+            <a className="nav-link disabled" href="h">En oferta</a>
           </li>
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href="https" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Redes sociales
+              Categorias
             </a>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a className="dropdown-item" href="https">Instagram</a>
-              <a className="dropdown-item" href="https">WhatsApp</a>
+              <NavLink to='/category/sf' className="dropdown-item">Ciencia Ficcion</NavLink>
+              <NavLink to='/category/terror' className="dropdown-item">Terror</NavLink>
+              <NavLink to='/category/childish' className="dropdown-item">Infantil</NavLink>
+              <NavLink to='/category/romance' className="dropdown-item">Romance</NavLink>
               <div className="dropdown-divider"></div>
-              <a className="dropdown-item" href="https">Quienes somos</a>
+              <a className="dropdown-item disabled" href="h">Quienes somos</a>
             </div>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="https">Ayuda con mi pedido</a>
+            <a className="nav-link disabled" href="h">Ayuda con mi pedido</a>
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0 search-selector">

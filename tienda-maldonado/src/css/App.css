@@ -36,3 +36,31 @@
     transform: rotate(360deg);
   }
 }
+
+.bg-light {
+  background-color: #181818 !important;
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+  color: white !important;
+}
+
+.navbar-light .navbar-nav .nav-link.disabled {
+  color: white !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: white !important;
+}
+
+.dropdown-item {
+  color: white !important;
+}
+
+.dropdown-menu {
+  background-color: #181818 !important;
+}
+
+.navbar-light .navbar-brand {
+  color: white !important;
+}

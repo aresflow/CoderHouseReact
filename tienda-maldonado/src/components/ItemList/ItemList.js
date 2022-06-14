@@ -1,25 +1,33 @@
 import Item from '../Item/Item'
 import productos from '../../data/productos.json'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 
 const ItemList = () => {
     const [products, setProducts] = useState([]);
+    const { categoryId } = useParams()
 
     const getFetch = () => {
         return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(productos)
-            }, 2000)
+            resolve(productos)
         })
     }
   
     useEffect(() => {
-        getFetch()
+        if (categoryId) {
+            getFetch()
+            .then((data) => {
+                    setProducts(data.filter(item => item.category === categoryId))
+                })
+            .catch(error => { console.log(error)}) 
+        } else {
+            getFetch()
             .then((data) => {
                     setProducts(data)
                 })
-            .catch(error => { console.log(error)})
-    }, [])
+            .catch(error => { console.log(error)})      
+        }
+    }, [categoryId])
 
     return (
     <>
