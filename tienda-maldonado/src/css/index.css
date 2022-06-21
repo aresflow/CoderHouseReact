@@ -27,14 +27,13 @@ code {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
 }
 
 .counter_button_container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 200px;
+  width: 100px;
 }
 
 .counter_button {
@@ -124,7 +123,14 @@ code {
   margin-left: 29px;
 }
 
+.button_agregar {
+  margin-top: 10px;
+}
 
+.button_cart {
+  display: block;
+  margin-top: 60px;
+}
 
 /* MOBILE */
 
