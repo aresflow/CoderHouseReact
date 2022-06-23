@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {NavLink} from 'react-router-dom';
 import { useState } from 'react'
 import ItemCount from '../ItemCount/ItemCount'
+import { CartContext } from '../../contexts/cartContext';
 
-const ItemDetail = ({title, price, pictureUrl, description, stock}) => {
+const ItemDetail = ({id, title, price, pictureUrl, description, stock}) => {
 
   const [count, setCount] = useState(0)
+  const { cart, addToCart } = useContext(CartContext)
 
   const onAdd = (cant) => {
     setCount(cant)
+    if(cant > 0){
+      addToCart({id: id, producto: title, cantidad: cant})
+    }
   }
+  
+  // console.log(cart)
   
   return (
     <div className="row detail_container">       

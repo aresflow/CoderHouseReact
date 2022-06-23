@@ -30,12 +30,12 @@ const ItemDetailContainer = () => {
             // const itemFetched = await item.json()
             // setItemDetail(itemFetched)
             // setLoading(false)
-
+// console.log(itemDetail)
   return (
     <div>
         {
             loading ? <p>Loading...</p> :
-            <ItemDetail title={itemDetail.title} price={itemDetail.price} pictureUrl={itemDetail.pictureUrl} description={itemDetail.description} stock={itemDetail.stock}/>
+            <ItemDetail id={itemDetail.id} title={itemDetail.title} price={itemDetail.price} pictureUrl={itemDetail.pictureUrl} description={itemDetail.description} stock={itemDetail.stock}/>
         }
     </div>
   )
