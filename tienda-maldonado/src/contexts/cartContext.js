@@ -8,18 +8,20 @@ export const CartContextProvider = ({ children }) => {
 
     const addToCart = (item) => {
         if(cart.length > 0){
-            const cartItem = cart.map(p => {
+            cart.find(p => {
                 if(p.id === item.id) {
                     p.cantidad += item.cantidad
-                    return p
+                    
                 }
                 else {
-                    return p
+                    setCart([...cart, item])
                 }
             })
-            console.log(cartItem, "console del cartitem")
-            setCart([...cartItem, item])
         }
+        // }
+            // console.log(cartItem, "console del cartitem")
+            // setCart([...cartItem, item])
+        // }
         else {
             setCart([...cart, item])
         }
