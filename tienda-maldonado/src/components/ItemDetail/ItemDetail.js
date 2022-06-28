@@ -7,7 +7,7 @@ import { CartContext } from '../../contexts/cartContext';
 const ItemDetail = ({id, title, price, pictureUrl, description, stock}) => {
 
   const [count, setCount] = useState(0)
-  const { cart, addToCart } = useContext(CartContext)
+  const { addToCart } = useContext(CartContext)
 
   const onAdd = (cant) => {
     setCount(cant)
@@ -15,8 +15,6 @@ const ItemDetail = ({id, title, price, pictureUrl, description, stock}) => {
       addToCart({id: id, producto: title, cantidad: cant})
     }
   }
-  
-  // console.log(cart)
   
   return (
     <div className="row detail_container">       

@@ -19,12 +19,29 @@ export const CartContextProvider = ({ children }) => {
         setCart([])
     }
 
+    const removeItem = (item, band) => () => {
+        if (cart.find(p => p.id === item.id)) {
+            cart.map((p) => {
+                if (p.id === item.id && band === "one") { 
+                    p.cantidad -= 1; 
+                    setCart([...cart]) 
+                }
+                if (p.id === item.id && band === "all") {
+                    cart.splice(cart.indexOf(p), 1);
+                    p.cantidad -= item.cantidad; 
+                    setCart([...cart]) 
+                }
+            });
+        }
+    }
+
     return (
         <CartContext.Provider
             value={{
                 cart,
                 addToCart,
-                removeCart
+                removeCart,
+                removeItem
             }}
         >
             {children}
