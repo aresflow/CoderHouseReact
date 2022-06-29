@@ -8,11 +8,10 @@ const CartWidget = () => {
   const [cant, setCant] = useState(0)
   
   useEffect(() => {
-    let cantTotal;
+    let cantTotal = 0;
       cart.map(item => {
-        cantTotal =+ item.cantidad;
-      }
-      )
+        cantTotal += item.cantidad;
+      });
       setCant(cantTotal)
   }, [cart])
 

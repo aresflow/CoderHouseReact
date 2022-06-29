@@ -23,7 +23,11 @@ export const CartContextProvider = ({ children }) => {
         if (cart.find(p => p.id === item.id)) {
             cart.map((p) => {
                 if (p.id === item.id && band === "one") { 
-                    p.cantidad -= 1; 
+                    p.cantidad -= 1;
+                    if(p.cantidad === 0){
+                        cart.splice(cart.indexOf(p), 1);
+                        p.cantidad -= item.cantidad; 
+                    } 
                     setCart([...cart]) 
                 }
                 if (p.id === item.id && band === "all") {

@@ -32,9 +32,8 @@ const ItemDetail = ({id, title, price, pictureUrl, description, stock}) => {
                 count > 0 ? 
                 <NavLink to="/cart" className="button_cart btn btn-primary">Ir al carrito</NavLink> : 
                 <ItemCount stock={stock} initial={0} onAdd={onAdd}/>
-              }
-              
-            </div>
+              }        
+      </div>
     </div>
   )
 }
