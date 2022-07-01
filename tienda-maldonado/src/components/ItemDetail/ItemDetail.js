@@ -12,7 +12,7 @@ const ItemDetail = ({id, title, price, pictureUrl, description, stock}) => {
   const onAdd = (cant) => {
     setCount(cant)
     if(cant > 0){
-      addToCart({id: id, producto: title, cantidad: cant})
+      addToCart({id: id, producto: title, cantidad: cant, price: price, pictureUrl: pictureUrl})
     }
   }
   
@@ -27,7 +27,7 @@ const ItemDetail = ({id, title, price, pictureUrl, description, stock}) => {
       <div className="card-body detail_body">
               <h4 className="card-title detail_title"> {title} </h4>
               <p className="detail_details">Descripción: {description} </p>
-              <p className="card-text detail_price">Precio: {price} </p>
+              <p className="card-text detail_price">Precio: ${price} </p>
               {
                 count > 0 ? 
                 <NavLink to="/cart" className="button_cart btn btn-primary">Ir al carrito</NavLink> : 

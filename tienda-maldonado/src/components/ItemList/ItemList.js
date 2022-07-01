@@ -1,31 +1,47 @@
 import Item from '../Item/Item'
-import productos from '../../data/productos.json'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { getDocs, collection, query, where, getFirestore } from 'firebase/firestore'
 
 const ItemList = () => {
     const [products, setProducts] = useState([]);
     const { categoryId } = useParams()
 
-    const getFetch = () => {
-        return new Promise((resolve) => {
-            resolve(productos)
-        })
-    }
-  
     useEffect(() => {
-        if (categoryId) {
-            getFetch()
-            .then((data) => {
-                    setProducts(data.filter(item => item.category === categoryId))
+        if(!categoryId){
+        //Para tener una lista de items
+            const db = getFirestore()
+            const queryCollection = collection(db, 'productos')
+            getDocs(queryCollection) //promesa
+                .then(resp => {
+                    setProducts(resp.docs.map(doc => {
+                        return {
+                            id: doc.id,
+                            ...doc.data()
+                        }
+                    }))
                 })
-            .catch(error => { console.log(error)}) 
-        } else {
-            getFetch()
-            .then((data) => {
-                    setProducts(data)
+                .catch(err => {
+                    console.log(err)
                 })
-            .catch(error => { console.log(error)})      
+        }
+        else{
+        //Para tener items filtrados
+            const db = getFirestore()
+            const queryCollection = collection(db, 'productos')
+            const queryCollectionFilter = query( queryCollection, where('category', '==', categoryId) )
+            getDocs(queryCollectionFilter)
+                .then(resp => {
+                    setProducts(resp.docs.map(doc => {
+                        return {
+                            id: doc.id,
+                            ...doc.data()
+                        }
+                    }))
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
     }, [categoryId])
 

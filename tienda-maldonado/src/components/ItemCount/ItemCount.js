@@ -8,11 +8,9 @@ const ItemCount = ({stock, initial, onAdd}) => {
   const onSuma = () => {
     if (count < stock) {
         setCount(count + 1);
-        console.log('La cantidad seleccionada es: ' + (count + 1));
     }
     else {
         setCantidad("No hay stock suficiente, cantidad maxima: " + stock);
-        console.log('No hay stock suficiente');
     }
   }
 
@@ -20,10 +18,6 @@ const ItemCount = ({stock, initial, onAdd}) => {
     if (count > 0) {
         setCount(count - 1);
         setCantidad('');
-        console.log('La cantidad seleccionada es: ' + (count - 1));
-    }
-    else {
-        console.log('No hay elementos para eliminar');
     }
   }
 

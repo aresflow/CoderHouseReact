@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams } from 'react-router-dom';
-
-import productos from '../../data/productos.json'
+import { doc, getDoc, getFirestore } from 'firebase/firestore'
 import ItemDetail from "../ItemDetail/ItemDetail"
-
 
 const ItemDetailContainer = () => {
 
@@ -11,26 +9,23 @@ const ItemDetailContainer = () => {
     const [loading, setLoading] = useState(true)
     const { id } = useParams()
 
-    const getItemDetail = () => {
-        return new Promise((resolve) => {
-            resolve(productos)
-        })
-    }
-
     useEffect(() => {
-        getItemDetail()
-            .then((data) => {
-                setItemDetail(data.find(item => item.id === id))
-                setLoading(false)
+        const db = getFirestore()
+        const queryItem = doc(db, 'productos', id)
+        getDoc(queryItem)
+            .then(resp => {
+                setItemDetail({
+                    id: resp.id,
+                    ...resp.data()
                 })
-            .catch(error => { console.log(error)})
-    }, [id])
+                setLoading(false)
 
-            // const item = await fetch('/assets/data/item.json')
-            // const itemFetched = await item.json()
-            // setItemDetail(itemFetched)
-            // setLoading(false)
-// console.log(itemDetail)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [])
+
   return (
     <div>
         {
