@@ -16,9 +16,6 @@ const NavBar = () => {
           <li className="nav-item active">
             <NavLink to='/' className={({ isActive }) => isActive ? 'nav-link' : 'nav-link'}>Inicio</NavLink>
           </li>
-          <li className="nav-item">
-            <a className="nav-link disabled" href="h">En oferta</a>
-          </li>
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href="https" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Categorias
@@ -29,17 +26,9 @@ const NavBar = () => {
               <NavLink to='/category/childish' className="dropdown-item">Infantil</NavLink>
               <NavLink to='/category/romance' className="dropdown-item">Romance</NavLink>
               <div className="dropdown-divider"></div>
-              <a className="dropdown-item disabled" href="h">Quienes somos</a>
             </div>
           </li>
-          <li className="nav-item">
-            <a className="nav-link disabled" href="h">Ayuda con mi pedido</a>
-          </li>
         </ul>
-        <form className="form-inline my-2 my-lg-0 search-selector">
-          <input className="form-control mr-sm-2" type="search" placeholder="Nombre del producto" aria-label="Search" />
-          <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-        </form>
       </div>
       <NavLink to='/cart' className="cart-widget">
         <CartWidget />

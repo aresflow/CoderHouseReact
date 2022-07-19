@@ -32,8 +32,8 @@ const ItemCount = ({stock, initial, onAdd}) => {
           cantidad ? <p className='counter_text2'>{cantidad}</p> : null
         }
         <div className='counter_button_container'>
-            <button className='btn btn-primary' onClick={onSuma}>+1</button>
             <button className='btn btn-danger' onClick={onDelete}>-1</button>
+            <button className='btn btn-primary' onClick={onSuma}>+1</button>
         </div>
         <button className='btn btn-primary button_agregar' onClick={add}>Agregar al carrito</button>
     </div>

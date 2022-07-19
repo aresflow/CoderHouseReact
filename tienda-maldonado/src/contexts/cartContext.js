@@ -39,13 +39,25 @@ export const CartContextProvider = ({ children }) => {
         }
     }
 
+    const addItem = (item) => () => {
+        if (cart.find(p => p.id === item.id)) {
+            cart.map((p) => {
+                if (p.id === item.id) {
+                    p.cantidad += 1;
+                    setCart([...cart])
+                }
+            });
+        }
+    }
+
     return (
         <CartContext.Provider
             value={{
                 cart,
                 addToCart,
                 removeCart,
-                removeItem
+                removeItem,
+                addItem
             }}
         >
             {children}

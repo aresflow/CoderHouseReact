@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react"
-import { getFirestore, collection, addDoc, doc, docs, getDocs, updateDoc, where, query, writeBatch, documentId } from "firebase/firestore"
+import { getFirestore, collection, addDoc, getDocs, where, query, writeBatch, documentId } from "firebase/firestore"
 import { CartContext } from "../../contexts/cartContext"
 import {NavLink} from 'react-router-dom';
+import { useForm } from "../../hooks/useForm";
 
 const Cart = () => {
-  const { cart, removeCart, removeItem } = useContext(CartContext)
+  const { cart, removeCart, removeItem, addItem } = useContext(CartContext)
   const [empty, setEmpty] = useState(false)
   const [total, setTotal] = useState(0)
   const [idCompra, setIdCompra] = useState(0)
@@ -16,16 +17,15 @@ const Cart = () => {
   useEffect(() => {
     let totalSum = 0
     cart.map(item => {
-      totalSum += item.cantidad * item.price
+      return totalSum += item.cantidad * item.price
     })
     setTotal(totalSum)
   }, [cart])
 
-    const generateOrder = async (e) => {
-    e.preventDefault()
+  const generateOrder = async (e) => {
     let orden = {}
 
-    orden.buyer = {name: "Eze", email: "eze@gmail.com", phone: "11111"}
+    orden.buyer = {name: name, email: email, phone: phone}
     orden.total = total
 
     orden.items = cart.map(cartItem => {
@@ -42,8 +42,7 @@ const Cart = () => {
     const orderCollection = collection(db, "orders")
     addDoc(orderCollection, orden)
     .then(resp => {
-      setIdCompra(resp.id)
-      console.log(resp.id)   //ESTO DA EL ID AUTOGENERADO POR CADA COMPRA
+      setIdCompra(resp.id) //ESTO DA EL ID AUTOGENERADO POR CADA COMPRA
     })
     .catch(err => {
       console.log(err)
@@ -71,13 +70,24 @@ const Cart = () => {
       removeCart()
     })
     batch.commit()
+  }
 
-    //Para actualizar la base de datos de firebase
-    // const updateCollection = doc(db, "productos", 'CgSYOdWbg2slavImDWj7')
-    // updateDoc(updateCollection, {stock: 10}) //Le paso el item que quiero actualizar
-    // .then(() => {
-    //   console.log( 'actualizado')
-    // })
+  const [formValues, errors, handleInputChange, validate] = useForm({
+    name: '',
+    email: '',
+    email2: '',
+    phone: ''
+  });
+
+  const { name, email, email2, phone } = formValues;
+
+  useEffect(() => {
+    validate(formValues)
+  }, [name, email, email2, phone])
+
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      generateOrder();
   }
 
   return (
@@ -87,33 +97,102 @@ const Cart = () => {
         <div>
           <ul>
             {
-              cart.map(item => 
-                <li key={item.id}>
-                <p>Libro: {item.producto} </p>
-                <p>Cantidad: {item.cantidad}</p>
-                <p>Total: {(item.price * item.cantidad)}</p>
-              
-                <button onClick={removeItem(item, "one")}>-1</button>
-                <button className="btn btn-outline-danger" onClick={removeItem(item, "all")}>Eliminar todo el producto</button>
-                </li>
+              cart.map(item =>
+              <div key={item.id} className="cart-container">
+                <div className="cart-product-container">
+                  <li className="cart-li-container" key={item.id}>
+                    <div>
+                      <img className="cart-product-img" src={item.pictureUrl} alt=""/>
+                    </div>
+                    <h2 className="cart-p-container">Libro: {item.producto} </h2>
+                  </li>
+                </div>
+                <div className="cart-button-container">
+                  <button className="btn btn-outline-secondary" onClick={removeItem(item, "one")}>-1</button>
+                  <p className="cart-cant-container">Cantidad: {item.cantidad}</p>
+                  <button className="btn btn-outline-secondary" onClick={addItem(item)}>+1</button>
+                  <button className="btn btn-outline-danger btn-cart" onClick={removeItem(item, "all")}>X</button>
+                </div>
+                <h2 className="cart-p-container cart-total-container">Total: {(item.price * item.cantidad)}</h2>
+              </div> 
               )
             }
-            <h2>Total de compra: {total}</h2>
+            <h3>Total de compra: {total}</h3>
+            <button className="btn btn-outline-danger" onClick={removeCart}>Vaciar carrito</button>
             {
-              <button className="btn btn-outline-success" onClick={generateOrder}>Generar orden</button>
+              <>
+                <form onSubmit={ handleSubmit }>
+                  <hr />
+                  <h4>Formulario de compra</h4>
+                  <div className="form-group">
+                    <label htmlFor="name">Nombre</label>
+                      <input type="text" name="name"  className="form-control"
+                      placeholder="Tu nombre" autoComplete="off" value={ name } onChange={ handleInputChange }>   
+                      </input>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                      <input type="text" name="email" className="form-control"
+                      placeholder="email@gmail.com" autoComplete="off" value={ email } onChange={ handleInputChange } required>   
+                      </input>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="email">Confirme su email</label>
+                      <input type="text" name="email2" className="form-control"
+                      placeholder="email@gmail.com" autoComplete="off" value={ email2 } onChange={ handleInputChange } required>   
+                      </input>
+                      {
+                        email2.length > 2 ? (errors === 'El email debe coincidir' ? <p className="error alert alert-danger">{ errors }</p> : null) : null
+                      }
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="phone">Telefono</label>
+                      <input type="text" name="phone" className="form-control"
+                      placeholder="341333333" value={ phone } onChange={ handleInputChange }>   
+                      </input>
+                  </div>
+
+                  <button className="btn btn-outline-success" disabled={ errors === 'Campos rellenados correctamente' ? false : true } onClick={handleSubmit}>Generar orden</button>
+                </form>
+              </>
             }
           </ul>
-            <button className="btn btn-outline-danger" onClick={removeCart}>Vaciar carrito</button>
         </div>
         :
         <>
           {
             idCompra.length > 0 ?
-            <h2>Id de compra: {idCompra}</h2>
+            <div className="jumbotron text-center">
+              <h1 className="display-3">Thank You!</h1>
+              <p className="lead">Tu orden fue realizada con exito. Te contactaremos pronto.</p>
+              <h3>Id de compra: {idCompra}</h3>
+              <p className="lead"><strong>Por favor revisa tu email</strong> donde se te ha enviado la información referida a esta compra.</p>
+              <p className="lead">
+                <NavLink className="btn btn-primary btn-sm" to="/">Volver a la tienda</NavLink>
+              </p>
+            </div>
             :
-            <h2>No hay nada en el carrito</h2>
+            <div className="container-fluid  mt-100">
+				      <div className="row empty-cart-container">
+					      <div className="col-md-12">			
+							    <div className="card">
+                    <div className="card-body cart">
+                        <div className="col-sm-12 empty-cart-cls text-center">
+                          <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" className="img-fluid mb-4 mr-3" alt="cart" />
+                          <h3><strong>Tu carrito esta vacío</strong></h3>
+                          <h4>Vuelve a la tienda para continuar comprando</h4>
+                          <NavLink className="btn btn-primary btn-sm" to="/">Volver a la tienda</NavLink>
+								        </div>
+						        </div>
+				          </div>		
+                </div>
+              </div>
+            </div>
           }
-          <NavLink to="/">Volver a la tienda</NavLink>
+          
         </>
     }
     </>
